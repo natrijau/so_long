@@ -1,14 +1,6 @@
 #ifndef MAIN_H
 # define MAIN_H
 
-
-typedef struct s_player
-{
-	mlx_image_t *mouse;
-    int         x;
-    int         y;
-} player_t;
-
 typedef struct s_texture
 {
 	mlx_image_t *img;
@@ -24,13 +16,14 @@ typedef struct s_texture
 //a modifier en game_t
 typedef struct s_map_texture
 {
-	mlx_image_t 	*mouse;
+	mlx_image_t 	*player;
 	mlx_t           *mlx;
     texture_t       *texture;
-   // player_t        *mouse;
     char            **map;
     int             x;
     int             y;
+	int				width;
+	int				height;
 }   map_texture_t;
 
 #endif
