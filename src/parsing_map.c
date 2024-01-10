@@ -1,47 +1,36 @@
-#include <stdio.h>
-#include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "../definitive_libft/get_next_line.h"
 #include "../definitive_libft/libft.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../MLX42/include/MLX42/MLX42_Int.h"
-#define WIDTH  1320
+#include "./main.h"
+#define WIDTH  1200
 #define HEIGHT 1200
 
-typedef struct mouse_img
+map_texture_t    *copie_content(map_texture_t *copie, map_texture_t *content, int line)
 {
-    mlx_image_t *mouse;
+    int i;
 
-} mouse_img_t;
+    i = 0;
+    copie->map = malloc(sizeof(char *) * line + 1);
+    if (!copie)
+        return(NULL);
+    while (i <= line + 1)
+    {
+        copie->map[i] = ft_strdup(content->map[i]);
+        //printf("%s\n",copie->map[i]);
+        i++;
+    }
+    //for(int c = 0; c <= line + 1;c++)
+    //    printf("%s\n",copie->map[c]);
+    //printf("\n");
+    return (copie);
+}
 
-typedef struct player
-{
-    mlx_t       *mlx;
-    mouse_img_t *player;
-} player_t;
-
-typedef struct collectible
-{
-    mlx_t       *mlx;
-    mlx_image_t *collectible;
-} collectible_t;
-
-typedef struct textures
-{
-    mlx_t       *mlx;
-    mlx_image_t *map_texture;
-}   texture_t;
-
-typedef struct map_texture
-{
-    collectible_t   *laine;
-    texture_t       *walls_grass;
-    player_t        *mouse;
-    char            **map;
-}   map_texture_t;
-
+//Check si flood fil valid
 int     check_map(map_texture_t *content, int line, int col)
 {
     int i;
@@ -49,17 +38,12 @@ int     check_map(map_texture_t *content, int line, int col)
 
     i = 1;
     j = 1;
-   /* 
-    printf("\nQQQ\n");
-    for (int c = 1; c <= line; c++)
-        printf("%s\n",content->map[c]);
-    printf("QQQ\n");
-*/
     while (i < line)
     {
         if (!(content->map[i][j] == '1' || content->map[i][j] == 'V'))
         {
             printf("map impossible a faire !\n");
+            //free(copie);
             return (1);
         }
         if (j == col)
@@ -71,14 +55,17 @@ int     check_map(map_texture_t *content, int line, int col)
             j++;
     }
     printf("map ok !\n");
+    //free(copie);
     return (0);
 }
 
-void     check_if_resolvable(map_texture_t *content, int x, int y, int line, int col)
+//Flood_fil
+void     check_if_resolvable(map_texture_t *copie, int x, int y, int line, int col)
 {
-    map_texture_t *copie;
-
-    copie = content;
+//        for(int c = 0; c <= line + 1;c++)
+//        printf("%s\n",content->map[c]);
+//    printf("\n");
+    
     if (copie->map[x][y] != '1' && copie->map[x][y] != 'V')
     {
        copie->map[x][y] = 'V';
@@ -89,9 +76,11 @@ void     check_if_resolvable(map_texture_t *content, int x, int y, int line, int
     }
     else 
         return ;
+    
     check_map(copie, line, col);
 }
 
+//Test le contenue de la map
 int     test_in_map(int line, int column, map_texture_t *content)
 {
     int i;
@@ -99,11 +88,13 @@ int     test_in_map(int line, int column, map_texture_t *content)
     int collectible;
     int player;
     int exit;
-    int x;
-    int y;
+    //int x;
+    //int y;
+    map_texture_t *copie;
+    copie = malloc(sizeof(map_texture_t));
 
-    x = 0;
-    y = 0; 
+    content->x = 0;
+    content->y = 0; 
     collectible = 0;
     player = 0;
     exit = 0; 
@@ -126,8 +117,8 @@ int     test_in_map(int line, int column, map_texture_t *content)
         if (content->map[i][j] == 'P')
         {
             player++;
-            x = i;
-            y = j;
+            content->x = i;
+            content->y = j;
         }
         j++;
         if (j == column)
@@ -137,13 +128,15 @@ int     test_in_map(int line, int column, map_texture_t *content)
             j = 1;
         }
     }
-    if (player != 1 || exit != 1 || collectible != 1)    
+    
+    if (player != 1 && exit != 1 && collectible > 0)    
     {
+        printf("p = %d, e = %d, c = %d\n", player, exit, collectible);
         printf("Erreur sur le nombre de player ou de sortie\n");
         return (1);
     }
-    
-    check_if_resolvable(content, x, y, line, column);
+    copie = copie_content(copie, content, line); 
+    check_if_resolvable(copie, content->x, content->y, line, column);
     return (0);
 }
 
@@ -200,73 +193,5 @@ int     check_walls(map_texture_t *content)
         i++;
     }
     test_in_map(count_line,count_column,content);
-    return (0);
-}
-
-void    free_map(char **str)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        free(str[i]);
-        i++;
-    }
-    free(str);
-}
-
-map_texture_t    *init_map(char *tmp, char *str, int fd)
-{
-    map_texture_t *content;
-
-    content = malloc(sizeof(map_texture_t));
-    while (tmp)
-    {
-        str = ft_strjoin(str, tmp);
-        if (str == NULL)
-        {
-            free(content);
-            exit(EXIT_FAILURE);
-        }
-        free(tmp);
-        tmp = get_next_line(fd);
-    }
-    content->map = ft_split(str, '\n');
-    if (content->map == NULL)
-    {
-        free_map(content->map);
-        exit(EXIT_FAILURE);
-    }
-    free(str);
-    close(fd);
-    
-    check_walls(content);
-
-    return (content);
-    /*
-    free_map(content->map);
-    free(content);
-    */
-}
-
-int main()
-{
-    char *str;
-    char *tmp;
-    int byte;
-
-    byte = open("./src/map.ber", O_RDWR);
-    if (byte == -1)
-        return (-1);
-    str = get_next_line(byte);
-    if (str == NULL)
-    {
-        free(str);
-        close(byte);
-        return (-1);
-    }
-    tmp = get_next_line(byte);
-    init_map(tmp, str, byte);
     return (0);
 }
