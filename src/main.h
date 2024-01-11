@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 # define MAIN_H
 
+
 typedef struct s_texture
 {
 	mlx_image_t *img;
@@ -22,8 +23,13 @@ typedef struct s_map_texture
     char            **map;
     int             x;
     int             y;
+	int				collectible;
+	int				compte_collectible;
+	int				moves;
 	int				width;
 	int				height;
 }   map_texture_t;
+
+mlx_image_t    *put_texture(mlx_t *mlx, char *path, int x, int y);
 
 #endif

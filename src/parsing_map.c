@@ -79,7 +79,6 @@ int     test_in_map(int line, int column, map_texture_t *content)
 {
 	int i;
 	int j;
-	int collectible;
 	int player;
 	int exit;
 	map_texture_t *copie;
@@ -87,7 +86,7 @@ int     test_in_map(int line, int column, map_texture_t *content)
 
 	content->x = 0;
 	content->y = 0; 
-	collectible = 0;
+	content->collectible = 0;
 	player = 0;
 	exit = 0; 
 	i = 1;
@@ -103,7 +102,7 @@ int     test_in_map(int line, int column, map_texture_t *content)
 			break;
 		}
 		if (content->map[i][j] == 'C')
-			collectible++;
+			content->collectible++;
 		if (content->map[i][j] == 'E')
 			exit++;
 		if (content->map[i][j] == 'P')
@@ -121,9 +120,9 @@ int     test_in_map(int line, int column, map_texture_t *content)
 		}
 	}
 	
-	if (player != 1 || exit != 1 || collectible < 1)    
+	if (player != 1 || exit != 1 || content->collectible < 1)    
 	{
-		printf("p = %d, e = %d, c = %d\n", player, exit, collectible);
+		printf("p = %d, e = %d, c = %d\n", player, exit, content->collectible);
 		printf("Erreur sur le nombre de player ou de sortie\n");
 		return (1);
 	}
