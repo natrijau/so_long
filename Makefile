@@ -6,7 +6,7 @@ SRC_FILES   = ./src/
 
 HEADERS	= $(LIBFT)/get_next_line.h #&& $(SRC_FILES)main.h
 LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-SRCS	= src/main.c src/parsing_map.c definitive_libft/get_next_line.c definitive_libft/get_next_line_utils.c definitive_libft/ft_split.c definitive_libft/ft_strdup.c definitive_libft/ft_strlcpy.c
+SRCS	= src/main.c src/parsing_map.c src/moves.c src/images.c src/error.c definitive_libft/get_next_line.c definitive_libft/get_next_line_utils.c definitive_libft/ft_split.c definitive_libft/ft_strdup.c definitive_libft/ft_strlcpy.c
 OBJS	= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)
