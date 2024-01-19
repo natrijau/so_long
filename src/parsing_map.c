@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:11:50 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/12 17:52:53 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:18:25 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,155 +21,29 @@
 #include "./main.h"
 #include "./parsing_map.h"
 
-//! coin manquant 
-//! largeur pas bonne
+// void	free_map2(t_map_texture *content)
+// {
+// 	int	i;
 
-t_map_texture	*copie_content(t_map_texture *copie,
-	t_map_texture *content, int line)
-{
-	int	i;
+// 	i = 0;
+// 	while (content->map[i])
+// 	{
+// 		free(content->map[i]);
+// 		i++;
+// 	}
+// 	free(content->map);
+// }
 
-	i = 0;
-	line += 1;
-	copie->map = malloc(sizeof(char *) * line + 1);
-	if (!copie)
-		return (NULL);
-	while (i <= line)
-	{
-		copie->map[i] = ft_strdup(content->map[i]);
-		i++;
-	}
-	copie->map[i] = NULL;
-	return (copie);
-}
-
-//Check si flood fil valid
-int	check_map(t_map_texture *content, int line, int col)
+int	check_last_line(t_map_texture *content)
 {
 	int	i;
 	int	j;
 
-	i = 1;
-	j = 1;
-	while (i < line)
-	{
-		if (!(content->map[i][j] == '1' || content->map[i][j] == 'V'
-			|| content->map[i][j] == '0'))
-		{
-			printf("map impossible a faire !\n");
-			//free(copie);
-			return (1);
-		}
-		if (j == col)
-		{
-			printf("\n");
-			i++;
-		}
-		else
-			j++;
-	}
-	printf("map ok !\n");
-	//free(copie);
-	return (0);
-}
-
-//Flood_fil
-t_map_texture	*check_if_resolvable(t_map_texture *copie, int x,
-	int y)
-{
-	if (copie->map[x][y] != '1' && copie->map[x][y] != 'V')
-	{
-		copie->map[x][y] = 'V';
-		check_if_resolvable(copie, x + 1, y);
-		check_if_resolvable(copie, x - 1, y);
-		check_if_resolvable(copie, x, y + 1);
-		check_if_resolvable(copie, x, y - 1);
-	}
-	return (copie);
-}
-
-//Test le contenue de la map
-int	test_in_map(int line, int column, t_map_texture *content)
-{
-	int				i;
-	int				j;
-	int				player;
-	int				exit;
-	t_map_texture	*copie;
-
-	copie = malloc(sizeof(t_map_texture));
-	content->x = 0;
-	content->y = 0;
-	content->collectible = 0;
-	player = 0;
-	exit = 0;
-	i = 1;
-	j = 1;
-	while (i <= line)
-	{
-		if ((((((content->map[i][j] != '1' && content->map[i][j] != 'E')
-					&& content->map[i][j] != '0')) && content->map[i][j] != 'P')
-						&& content->map[i][j] != 'C'))
-		{
-			printf("erreur\n");
-			return (1);
-		}
-		if (content->map[i][j] == 'C')
-			content->collectible++;
-		if (content->map[i][j] == 'E')
-			exit++;
-		if (content->map[i][j] == 'P')
-		{
-			player++;
-			content->x = i;
-			content->y = j;
-		}
-		j++;
-		if (j == column)
-		{
-			i++;
-			printf("\n");
-			j = 1;
-		}
-	}
-	if (player != 1 || exit != 1 || content->collectible < 1)
-	{
-		printf("p = %d, e = %d, c = %d\n", player, exit, content->collectible);
-		printf("Erreur sur le nombre de player ou de sortie\n");
-		return (1);
-	}
-	copie = copie_content(copie, content, line);
-	copie = check_if_resolvable(copie, content->x, content->y);
-	check_map(copie, line, column);
-	return (0);
-}
-
-//cheque si contour de map ok
-int	check_walls(t_map_texture *content)
-{
-	int	i;
-	int	j;
-	int	count_column;
-	int	count_line;
-
-	count_line = 0;
-	i = 0;
 	j = 0;
-	count_column = ft_strlen(content->map[i]) - 1;
-	while (content->map[0][j])
-	{
-		if (content->map[0][j] != '1')
-		{
-			printf("erreur mur premiere ligne\n");
-			return (1);
-		}
-		j++;
-	}
-	//Nombre de ligne
+	i = 0;
 	while (content->map[i])
 		i++;
-	count_line = i - 2;
-	j = 0;
+	// count_line = i - 2;
 	while (content->map[i - 1][j])
 	{
 		if (content->map[i - 1][j] != '1')
@@ -179,6 +53,42 @@ int	check_walls(t_map_texture *content)
 		}
 		j++;
 	}
+	return (0);
+}
+
+// Check first line
+int	check_first_line(t_map_texture *content)
+{
+	int	j;
+
+	j = 0;
+	while (content->map[0][j])
+	{
+		if (content->map[0][j] != '1')
+		{
+			printf("erreur mur premiere ligne\n");
+			return (1);
+		}
+		j++;
+	}
+	return (0);
+}
+
+//cheque si contour de map ok
+int	check_walls(t_map_texture *content)
+{
+	int	i;
+	int	count_column;
+	int	count_line;
+
+	count_line = 0;
+	i = 0;
+	count_column = ft_strlen(content->map[i]) - 1;
+	while (content->map[i])
+		i++;
+	count_line = i - 2;
+	if (check_first_line(content) != 0 || check_last_line(content) != 0)
+		return (1);
 	i = 1;
 	while (i <= count_line)
 	{
@@ -193,12 +103,14 @@ int	check_walls(t_map_texture *content)
 	return (0);
 }
 
+//Numb of column
 int	check_size(t_map_texture *content)
 {
 	int	i;
 	int	j;
 	int	c;
-
+	int	result;
+	
 	i = 0;
 	j = 0;
 	while (content->map[i])
@@ -215,5 +127,6 @@ int	check_size(t_map_texture *content)
 		}
 		i++;
 	}
-	return (check_walls(content));
+	result = check_walls(content);
+	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:32:29 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/12 17:44:19 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/18 10:24:30 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	move_up(t_map_texture *data)
 				(data->x) * 64, (data->y) * 64);
 		data->map[data->x][data->y] = '0';
 	}
+	if (data->map[data->x][data->y] == 'E'
+			&& (data->collectible == data->compte_collectible))
+	{
+		printf("\n\tBravo vous avez fini !!!\n");
+		mlx_close_window(data->mlx);
+	}
 	printf("nombre de deplacement : %d\n", data->moves);
 	data->moves ++;
 	data->x -= 1;
@@ -46,6 +52,12 @@ void	move_down(t_map_texture *data)
 		data->player = put_texture(data->mlx, "./remus.png",
 				(data->x) * 64, (data->y) * 64);
 		data->map[data->x][data->y] = '0';
+	}
+	if (data->map[data->x][data->y] == 'E'
+			&& (data->collectible == data->compte_collectible))
+	{
+		printf("\n\tBravo vous avez fini !!!\n");
+		mlx_close_window(data->mlx);
 	}
 	printf("nombre de deplacement : %d\n", data->moves);
 	data->x += 1;
@@ -64,6 +76,12 @@ void	move_left(t_map_texture *data)
 				(data->x) * 64, (data->y) * 64);
 		data->map[data->x][data->y] = '0';
 	}
+	if (data->map[data->x][data->y] == 'E'
+			&& (data->collectible == data->compte_collectible))
+	{
+		printf("\n\tBravo vous avez fini !!!\n");
+		mlx_close_window(data->mlx);
+	}
 	printf("nombre de deplacement : %d\n", data->moves);
 	data->y -= 1;
 	data->moves ++;
@@ -81,6 +99,12 @@ void	move_right(t_map_texture *data)
 				(data->x) * 64, (data->y) * 64);
 		data->map[data->x][data->y] = '0';
 	}
+	if (data->map[data->x][data->y] == 'E'
+			&& (data->collectible == data->compte_collectible))
+	{
+		printf("\n\tBravo vous avez fini !!!\n");
+		mlx_close_window(data->mlx);
+	}
 	printf("nombre de deplacement : %d\n", data->moves);
 	data->y += 1;
 	data->moves ++;
@@ -91,7 +115,10 @@ void	move_right(t_map_texture *data)
 void	ft_hook(mlx_key_data_t keydata, t_map_texture *data)
 {
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	{
 		mlx_close_window(data->mlx);
+		//fction exit programme 
+	}
 	else if ((mlx_is_key_down(data->mlx, MLX_KEY_W)
 			&& data->map[data->x - 1][data->y] != '1'))
 		move_up(data);
