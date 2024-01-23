@@ -6,12 +6,11 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:34:24 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/19 14:29:53 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:32:09 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "../definitive_libft/get_next_line.h"
@@ -21,7 +20,6 @@
 #include "./parsing_map.h"
 #include "./main.h"
 
-//Get tab map
 t_map_texture	*init_map(t_map_texture *content)
 {
 	while (content->get_map->tmp)
@@ -51,10 +49,10 @@ t_map_texture	*init_map(t_map_texture *content)
 int	get_map(char *av, t_map_texture *data)
 {
 	t_map	*map;
+
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (0);
-	// free map 
 	data->get_map = map;
 	map->byte = open(av, O_RDWR);
 	if (map->byte == -1)
@@ -63,9 +61,11 @@ int	get_map(char *av, t_map_texture *data)
 	if (map->str == NULL)
 	{
 		free(map->str);
-		free(map);
 		close(map->byte);
-		return (-1);
+		//free(map);
+		// mlx_terminate(data->mlx);
+		// free(data);
+		return (1);
 	}
 	map->tmp = get_next_line(map->byte);
 	return (0);
@@ -84,7 +84,7 @@ int	check_ber(char *str)
 		return (0);
 	else
 	{
-		printf("Le format de la map n'est pas bon !\n");
+		ft_putstr_fd("Le format de la map n'est pas bon !\n", 2);
 		return (1);
 	}
 }
@@ -98,9 +98,6 @@ int	check_arg(int ac, char *av)
 		return (1);
 	}
 	else if (check_ber(av) == 1)
-	{
-		ft_putstr_fd("La map n'ai pas au bon format !\n", 2);
 		return (1);
-	}
 	return (0);
 }

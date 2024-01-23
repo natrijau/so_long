@@ -6,16 +6,16 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:32:29 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/18 10:24:30 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:36:53 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "../definitive_libft/get_next_line.h"
 #include "../definitive_libft/libft.h"
+#include "../definitive_libft/ft_printf.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../MLX42/include/MLX42/MLX42_Int.h"
 #include "./main.h"
@@ -33,10 +33,10 @@ void	move_up(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		printf("\n\tBravo vous avez fini !!!\n");
+		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("nombre de deplacement : %d\n", data->moves);
 	data->moves ++;
 	data->x -= 1;
 	data->player->instances[0].y -= 64;
@@ -56,10 +56,10 @@ void	move_down(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		printf("\n\tBravo vous avez fini !!!\n");
+		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("nombre de deplacement : %d\n", data->moves);
 	data->x += 1;
 	data->moves ++;
 	data->player->instances[0].y += 64;
@@ -79,10 +79,10 @@ void	move_left(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		printf("\n\tBravo vous avez fini !!!\n");
+		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("nombre de deplacement : %d\n", data->moves);
 	data->y -= 1;
 	data->moves ++;
 	data->player->instances[0].x -= 64;
@@ -102,10 +102,10 @@ void	move_right(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		printf("\n\tBravo vous avez fini !!!\n");
+		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("nombre de deplacement : %d\n", data->moves);
 	data->y += 1;
 	data->moves ++;
 	data->player->instances[0].x += 64;
@@ -115,10 +115,7 @@ void	move_right(t_map_texture *data)
 void	ft_hook(mlx_key_data_t keydata, t_map_texture *data)
 {
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-	{
 		mlx_close_window(data->mlx);
-		//fction exit programme 
-	}
 	else if ((mlx_is_key_down(data->mlx, MLX_KEY_W)
 			&& data->map[data->x - 1][data->y] != '1'))
 		move_up(data);
@@ -134,7 +131,7 @@ void	ft_hook(mlx_key_data_t keydata, t_map_texture *data)
 	else if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		printf("\n\tBravo vous avez fini !!!\n");
+		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
 }

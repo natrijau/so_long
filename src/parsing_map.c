@@ -6,12 +6,11 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:11:50 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/19 15:18:25 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:36:45 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "../definitive_libft/get_next_line.h"
@@ -20,19 +19,6 @@
 #include "../MLX42/include/MLX42/MLX42_Int.h"
 #include "./main.h"
 #include "./parsing_map.h"
-
-// void	free_map2(t_map_texture *content)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (content->map[i])
-// 	{
-// 		free(content->map[i]);
-// 		i++;
-// 	}
-// 	free(content->map);
-// }
 
 int	check_last_line(t_map_texture *content)
 {
@@ -43,12 +29,11 @@ int	check_last_line(t_map_texture *content)
 	i = 0;
 	while (content->map[i])
 		i++;
-	// count_line = i - 2;
 	while (content->map[i - 1][j])
 	{
 		if (content->map[i - 1][j] != '1')
 		{
-			printf("erreur mur derniere ligne\n");
+			ft_putstr_fd("erreur mur derniere ligne\n", 2);
 			return (1);
 		}
 		j++;
@@ -66,7 +51,7 @@ int	check_first_line(t_map_texture *content)
 	{
 		if (content->map[0][j] != '1')
 		{
-			printf("erreur mur premiere ligne\n");
+			ft_putstr_fd("erreur mur premiere ligne\n", 2);
 			return (1);
 		}
 		j++;
@@ -94,12 +79,13 @@ int	check_walls(t_map_texture *content)
 	{
 		if (content->map[i][0] != '1' || content->map[i][count_column] != '1')
 		{
-			printf("erreur mur premiere ou derniere colonne\n");
+			ft_putstr_fd("erreur mur premiere ou derniere colonne\n", 2);
 			return (1);
 		}
 		i++;
 	}
-	test_in_map (count_line, count_column, content);
+	if (test_in_map (count_line, count_column, content) != 0)
+		return (1);
 	return (0);
 }
 
@@ -110,7 +96,7 @@ int	check_size(t_map_texture *content)
 	int	j;
 	int	c;
 	int	result;
-	
+
 	i = 0;
 	j = 0;
 	while (content->map[i])
@@ -122,7 +108,7 @@ int	check_size(t_map_texture *content)
 			c++;
 		if (c != j)
 		{
-			printf ("le nombre de colonnes ne correspond pas!");
+			ft_putstr_fd ("le nombre de colonnes ne correspond pas!", 2);
 			return (1);
 		}
 		i++;

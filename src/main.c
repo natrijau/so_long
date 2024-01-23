@@ -6,12 +6,11 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 10:34:04 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/19 16:20:30 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:31:49 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "../definitive_libft/get_next_line.h"
@@ -23,16 +22,10 @@
 
 void	convert_and_display(t_map_texture *content, mlx_texture_t *texture)
 {
-	// Convert texture to a displayable image
 	content->player = mlx_texture_to_image(content->mlx, texture);
 	if (!content->player)
-	{
-		puts(mlx_strerror(mlx_errno));
-		error();
 		exit(EXIT_FAILURE);
-	}
 	display_image(content, texture);
-	//Gardez la fenêtre ouverte tant qu'un arrêt n'est pas demandé.
 	content->moves = 0;
 	content->compte_collectible = 0;
 }
@@ -54,7 +47,6 @@ int	open_window(t_map_texture *content)
 	content->mlx = mlx_init(j * 64, i * 64, "REMUS GAME", false);
 	if (!(content->mlx))
 	{
-		puts(mlx_strerror(mlx_errno));
 		free(content);
 		content = NULL;
 		return (EXIT_FAILURE);
@@ -66,17 +58,16 @@ int	get_and_open(char *str, t_map_texture *content)
 {
 	if (get_map(str, content) != 0)
 	{
-		free_map(content->map);
+		//free_map(content->map);
 		free(content->get_map);
 		free(content);
 		content = NULL;
-		printf("Erreur lors de la lecture de la map !\n");
+		ft_putstr_fd("Erreur lors de la lecture de la map !\n", 2);
 		return (1);
 	}
 	content = init_map(content);
 	if (check_size(content) != 0)
 	{
-		///// addd
 		free_map(content->map);
 		free(content->get_map);
 		free(content);
@@ -108,7 +99,6 @@ int	main(int ac, char **av)
 	convert_and_display(content, texture);
 	mlx_key_hook(content->mlx, (void (*))ft_hook, content);
 	mlx_loop(content->mlx);
-	mlx_delete_image(content->mlx, content->player);
 	free_final(content);
 	return (EXIT_SUCCESS);
 }

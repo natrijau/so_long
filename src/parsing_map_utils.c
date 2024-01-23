@@ -6,12 +6,11 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:48:11 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/17 12:07:07 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:32:02 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "../definitive_libft/get_next_line.h"
@@ -47,8 +46,7 @@ int	check_map(char **copy, int line, int col)
 		if (!(copy[i][j] == '1' || copy[i][j] == 'V'
 			|| copy[i][j] == '0'))
 		{
-			printf("map impossible a faire !\n");
-			error();
+			ft_putstr_fd("map impossible a faire !\n", 2);
 			return (1);
 		}
 		if (j == col)

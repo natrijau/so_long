@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_arg.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 14:51:42 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/15 16:21:17 by natrijau         ###   ########.fr       */
+/*   Created: 2023/11/01 16:46:12 by natrijau          #+#    #+#             */
+/*   Updated: 2024/01/23 11:31:43 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "../definitive_libft/get_next_line.h"
-#include "../definitive_libft/libft.h"
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../MLX42/include/MLX42/MLX42_Int.h"
-#include "./parsing_map.h"
-#include "./main.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdarg.h>
 
+int		ft_printf(const char *list, ...);
+int		ft_putstr(char *s);
+int		ft_putchar(char c);
+int		ft_nbr(int n);
+#endif
