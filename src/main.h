@@ -6,12 +6,20 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:35:25 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/23 10:55:17 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:02:26 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include "../definitive_libft/get_next_line.h"
+# include "../definitive_libft/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42_Int.h"
 
 typedef struct s_texture
 {
@@ -69,5 +77,18 @@ int				exit_game(t_map_texture *content);
 int				get_map(char *av, t_map_texture *data);
 int				check_ber(char *str);
 int				check_arg(int ac, char *av);
-
+char			**check_if_resolvable(char **copie, int x, int y);
+char			**copy_content(t_map_texture *content, int line);
+t_map_texture	*check_boxes_and_add(t_map_texture *content,
+					int i, int j);
+int				check_map(char **copie, int line, int col);
+int				presence_of_characters(t_map_texture *content,
+					int col, int line);
+int				test_in_map(int line, int column, t_map_texture *content);
+int				player_exit_collectible(t_map_texture *content);
+int				check_boxes_valid(t_map_texture *content, int i, int j);
+int				check_map(char **copie, int line, int col);
+int				test_in_map(int line, int column, t_map_texture *content);
+int				check_walls(t_map_texture *content);
+int				check_size(t_map_texture *content);
 #endif

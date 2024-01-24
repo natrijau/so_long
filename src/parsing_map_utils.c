@@ -6,19 +6,11 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:48:11 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/23 16:32:02 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:03:09 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "../definitive_libft/get_next_line.h"
-#include "../definitive_libft/libft.h"
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../MLX42/include/MLX42/MLX42_Int.h"
 #include "./main.h"
-#include "./parsing_map.h"
 
 static	void	free_copy(char **copy, int line)
 {

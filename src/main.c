@@ -6,18 +6,10 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 10:34:04 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/23 16:31:49 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:08:54 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "../definitive_libft/get_next_line.h"
-#include "../definitive_libft/libft.h"
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../MLX42/include/MLX42/MLX42_Int.h"
-#include "./parsing_map.h"
 #include "./main.h"
 
 void	convert_and_display(t_map_texture *content, mlx_texture_t *texture)
@@ -58,7 +50,6 @@ int	get_and_open(char *str, t_map_texture *content)
 {
 	if (get_map(str, content) != 0)
 	{
-		//free_map(content->map);
 		free(content->get_map);
 		free(content);
 		content = NULL;

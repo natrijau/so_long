@@ -6,18 +6,10 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:32:29 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/23 11:36:53 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:03:56 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "../definitive_libft/get_next_line.h"
-#include "../definitive_libft/libft.h"
-#include "../definitive_libft/ft_printf.h"
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../MLX42/include/MLX42/MLX42_Int.h"
 #include "./main.h"
 
 void	move_up(t_map_texture *data)
