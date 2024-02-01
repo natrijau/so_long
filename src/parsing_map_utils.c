@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:48:11 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:03:09 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:44:26 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	check_map(char **copy, int line, int col)
 
 	i = 1;
 	j = 1;
-	while (i < line)
+	while (i <= line)
 	{
-		if (!(copy[i][j] == '1' || copy[i][j] == 'V'
-			|| copy[i][j] == '0'))
+		if (copy[i][j] != '1' && copy[i][j] != 'V'
+			&& copy[i][j] != '0')
 		{
-			ft_putstr_fd("map impossible a faire !\n", 2);
+			ft_putstr_fd("map impossible to do!\n", 2);
 			return (1);
 		}
 		if (j == col)

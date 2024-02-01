@@ -6,11 +6,34 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 15:34:24 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:07:55 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:42:53 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./main.h"
+
+int	check_double_n(t_map_texture *content)
+{
+	int		i;
+	char	*str;
+
+	str = content->get_map->str;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n' && str[i + 1] == '\n')
+		{
+			ft_putstr_fd(
+				"The map must not be separated by a newline", 2);
+			free(content->get_map->str);
+			free(content->get_map);
+			free(content);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 t_map_texture	*init_map(t_map_texture *content)
 {
@@ -26,6 +49,8 @@ t_map_texture	*init_map(t_map_texture *content)
 		free(content->get_map->tmp);
 		content->get_map->tmp = get_next_line(content->get_map->byte);
 	}
+	if (check_double_n(content) == 1)
+		return (NULL);
 	content->map = ft_split(content->get_map->str, '\n');
 	free(content->get_map->str);
 	if (content->map == NULL)
@@ -73,7 +98,7 @@ int	check_ber(char *str)
 		return (0);
 	else
 	{
-		ft_putstr_fd("Le format de la map n'est pas bon !\n", 2);
+		ft_putstr_fd("The format of the map is not good!\n", 2);
 		return (1);
 	}
 }
@@ -83,7 +108,7 @@ int	check_arg(int ac, char *av)
 {
 	if (ac != 2)
 	{
-		ft_putstr_fd("Le nombre d'argument n'est pas valide !\n", 2);
+		ft_putstr_fd("The number of arguments is invalid!\n", 2);
 		return (1);
 	}
 	else if (check_ber(av) == 1)

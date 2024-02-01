@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:32:29 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:03:56 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:54:21 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	move_up(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
+		ft_putstr_fd("\n\tCongratulations, you're finished!!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	ft_printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("number of steps:%d\n", data->moves);
 	data->moves ++;
 	data->x -= 1;
 	data->player->instances[0].y -= 64;
@@ -48,10 +48,10 @@ void	move_down(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
+		ft_putstr_fd("\n\tCongratulations, you're finished!!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	ft_printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("number of steps:%d\n", data->moves);
 	data->x += 1;
 	data->moves ++;
 	data->player->instances[0].y += 64;
@@ -71,10 +71,10 @@ void	move_left(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
+		ft_putstr_fd("\n\tCongratulations, you're finished!!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	ft_printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("number of steps:%d\n", data->moves);
 	data->y -= 1;
 	data->moves ++;
 	data->player->instances[0].x -= 64;
@@ -94,10 +94,10 @@ void	move_right(t_map_texture *data)
 	if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
+		ft_putstr_fd("\n\tCongratulations, you're finished!!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
-	ft_printf("nombre de deplacement : %d\n", data->moves);
+	ft_printf("number of steps:%d\n", data->moves);
 	data->y += 1;
 	data->moves ++;
 	data->player->instances[0].x += 64;
@@ -123,7 +123,7 @@ void	ft_hook(mlx_key_data_t keydata, t_map_texture *data)
 	else if (data->map[data->x][data->y] == 'E'
 			&& (data->collectible == data->compte_collectible))
 	{
-		ft_putstr_fd("\n\tBravo vous avez fini !!!\n", 1);
+		ft_putstr_fd("\n\tCongratulations, you're finished!!!\n", 1);
 		mlx_close_window(data->mlx);
 	}
 }

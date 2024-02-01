@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 10:34:04 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:08:54 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/29 12:11:42 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ void	convert_and_display(t_map_texture *content, mlx_texture_t *texture)
 {
 	content->player = mlx_texture_to_image(content->mlx, texture);
 	if (!content->player)
+	{
+		free_map(content->map);
+		free(content);
 		exit(EXIT_FAILURE);
+	}
 	display_image(content, texture);
 	content->moves = 0;
 	content->compte_collectible = 0;
@@ -37,11 +41,13 @@ int	open_window(t_map_texture *content)
 		i++;
 	}
 	content->mlx = mlx_init(j * 64, i * 64, "REMUS GAME", false);
-	if (!(content->mlx))
+	if (content->mlx == NULL)
 	{
+		free(content->get_map);
+		free_map(content->map);
 		free(content);
 		content = NULL;
-		return (EXIT_FAILURE);
+		return (-1);
 	}
 	return (0);
 }
@@ -53,10 +59,12 @@ int	get_and_open(char *str, t_map_texture *content)
 		free(content->get_map);
 		free(content);
 		content = NULL;
-		ft_putstr_fd("Erreur lors de la lecture de la map !\n", 2);
+		ft_putstr_fd("Error reading the map!\n", 2);
 		return (1);
 	}
 	content = init_map(content);
+	if (content == NULL)
+		return (-1);
 	if (check_size(content) != 0)
 	{
 		free_map(content->map);
@@ -65,7 +73,11 @@ int	get_and_open(char *str, t_map_texture *content)
 		content = NULL;
 		return (1);
 	}
-	open_window(content);
+	if (open_window(content) != 0)
+	{
+		ft_printf("Error opening the window!\n");
+		return (-1);
+	}
 	return (0);
 }
 
@@ -85,6 +97,7 @@ int	main(int ac, char **av)
 	if (!texture)
 	{
 		free_map(content->map);
+		free(content);
 		return (0);
 	}
 	convert_and_display(content, texture);

@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:35:25 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:02:26 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:15:53 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_map
 	int		byte;
 }	t_map;
 
-//a modifier en game_t
 typedef struct s_map_texture
 {
 	mlx_image_t		*player;
@@ -72,7 +71,6 @@ void			ft_hook(mlx_key_data_t keydata, t_map_texture *data);
 void			error(void);
 void			free_map(char **str);
 void			free_final(t_map_texture *content);
-// void			free_map2(t_map_texture *data);
 int				exit_game(t_map_texture *content);
 int				get_map(char *av, t_map_texture *data);
 int				check_ber(char *str);

@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:50:40 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:02:48 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:53:21 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	player_exit_collectible(t_map_texture *content)
 	collectible = content->collectible;
 	if (player != 1 || exit != 1 || collectible < 1)
 	{
-		ft_putstr_fd("Erreur sur le player, la sortie ou le collectible !\n",
+		ft_putstr_fd("Error on the player, output or collectible!\n",
 			2);
 		return (1);
 	}
@@ -51,8 +51,8 @@ int	check_boxes_valid(t_map_texture *content, int i, int j)
 				&& content->map[i][j] != '0')) && content->map[i][j] != 'P')
 					&& content->map[i][j] != 'C'))
 	{
-		ft_putstr_fd("Une des cases de la map n'est pas valide !\n", 2);
-		return (1);
+		ft_putstr_fd("One of the boxes on the map is invalid!\n", 2);
+		return (-1);
 	}
 	return (0);
 }
@@ -71,7 +71,8 @@ int	presence_of_characters(t_map_texture *content, int col, int line)
 	j = 1;
 	while (i <= line)
 	{
-		check_boxes_valid(content, i, j);
+		if (check_boxes_valid(content, i, j) == -1)
+			return (-1);
 		content = check_boxes_and_add(content, i, j);
 		j++;
 		if (j == col)

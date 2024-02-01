@@ -6,7 +6,7 @@
 /*   By: natrijau <natrijau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 16:11:50 by natrijau          #+#    #+#             */
-/*   Updated: 2024/01/24 14:03:15 by natrijau         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:54:33 by natrijau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_last_line(t_map_texture *content)
 	{
 		if (content->map[i - 1][j] != '1')
 		{
-			ft_putstr_fd("erreur mur derniere ligne\n", 2);
+			ft_putstr_fd("last line wall error\n", 2);
 			return (1);
 		}
 		j++;
@@ -43,7 +43,7 @@ int	check_first_line(t_map_texture *content)
 	{
 		if (content->map[0][j] != '1')
 		{
-			ft_putstr_fd("erreur mur premiere ligne\n", 2);
+			ft_putstr_fd("first line wall error\n", 2);
 			return (1);
 		}
 		j++;
@@ -71,7 +71,7 @@ int	check_walls(t_map_texture *content)
 	{
 		if (content->map[i][0] != '1' || content->map[i][count_column] != '1')
 		{
-			ft_putstr_fd("erreur mur premiere ou derniere colonne\n", 2);
+			ft_putstr_fd("wall error first or last column\n", 2);
 			return (1);
 		}
 		i++;
@@ -100,7 +100,7 @@ int	check_size(t_map_texture *content)
 			c++;
 		if (c != j)
 		{
-			ft_putstr_fd ("le nombre de colonnes ne correspond pas!", 2);
+			ft_putstr_fd ("the number of columns does not match!\n", 2);
 			return (1);
 		}
 		i++;
